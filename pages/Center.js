@@ -15,7 +15,7 @@ const colors = [
 ];
 
 const Center = () => {
-  const { data: session, status } = useSession;
+  const { data: session, status } = useSession();
   const [color, setColor] = useState(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Center = () => {
     <div className="flex-grow">
       <header className="absolute top-5 right-8">
         <div
-          className="flex items-center bg-slate-400 space-x-3
+          className="flex items-center bg-teal-300 space-x-3
         opacity-90 hover:opacity-80 cursor-pointer rounded-full
         p-1 pr-2"
         >
