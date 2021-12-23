@@ -16,7 +16,7 @@ const Sidebar = () => {
   const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
   const [playlists, setPlaylists] = useState([]);
-  const [playlistId, setPlaylistId] = useRecoilState(playlistState);
+  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
 
   console.log("You picked a playlist", playlistId);
 
