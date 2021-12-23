@@ -65,7 +65,12 @@ const Center = () => {
           src={playlist?.images?.[0]?.url}
           alt=""
         />
-        <h1>hello</h1>
+        <div>
+          <p>PLAYLIST</p>
+          <h1 className="text-2xl md:text-3xl xl:text-5xl font-bold">
+            {playlist?.name}
+          </h1>
+        </div>
       </section>
     </div>
   );
