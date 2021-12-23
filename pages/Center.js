@@ -38,6 +38,7 @@ const Center = () => {
 
     console.log("You picked a playlist", playlistId);
   }, [spotifyApi, playlistId]);
+  console.log("data.body", playlist);
 
   return (
     <div className="flex-grow">
@@ -59,7 +60,11 @@ const Center = () => {
       <section
         className={`flex items-end space-x-7 bg-gradient-to-b ${color} h-80 text-white padding-8`}
       >
-        {/* <img src="https://picsum.photos/id/237/200/300" alt="" /> */}
+        <img
+          className="h-44 w-44 shadow-2xl"
+          src={playlist?.images?.[0]?.url}
+          alt=""
+        />
         <h1>hello</h1>
       </section>
     </div>
