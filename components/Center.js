@@ -5,6 +5,7 @@ import { shuffle } from "lodash";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { playlistIdState, playlistState } from "../atoms/playlistAtom";
 import useSpotify from "../hooks/useSpotify";
+import Songs from "./Songs";
 
 const colors = [
   "from-red-500",
@@ -29,16 +30,22 @@ const Center = () => {
   }, [playlistId]);
 
   useEffect(() => {
-    spotifyApi
-      .getPlaylist(playlistId)
-      .then((data) => {
-        setPlaylist(data.body);
-      })
-      .catch((err) => console.log("Something went wrong!", err));
-
-    console.log("You picked a playlist", playlistId);
-  }, [spotifyApi, playlistId]);
-  console.log("data.body", playlist);
+    if (spotifyApi.getAccessToken()) {
+      if (!playlistId) {
+        spotifyApi.getUserPlaylists().then((data) => {
+          setPlaylist(data.body.items[0]);
+        });
+      } else {
+        spotifyApi
+          .getPlaylist(playlistId)
+          .then((data) => {
+            setPlaylist(data.body);
+          })
+          .catch((err) => console.log("Something went wrong!", err));
+      }
+    }
+  }, [spotifyApi.getAccessToken(), playlistId]);
+  console.log("data.spotifyApi", playlist);
 
   return (
     <div className="flex-grow">
@@ -60,11 +67,13 @@ const Center = () => {
       <section
         className={`flex items-end space-x-7 bg-gradient-to-b ${color} h-80 text-white padding-8`}
       >
-        <img
-          className="h-44 w-44 shadow-2xl"
-          src={playlist?.images?.[0]?.url}
-          alt=""
-        />
+        {playlist && (
+          <img
+            className="h-44 w-44 shadow-2xl"
+            src={playlist?.images?.[0]?.url}
+            alt=""
+          />
+        )}
         <div>
           <p>PLAYLIST</p>
           <h1 className="text-2xl md:text-3xl xl:text-5xl font-bold">
@@ -72,6 +81,9 @@ const Center = () => {
           </h1>
         </div>
       </section>
+      <div>
+        <Songs />
+      </div>
     </div>
   );
 };
