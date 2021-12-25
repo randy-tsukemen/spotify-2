@@ -22,7 +22,7 @@ const Center = () => {
   const { data: session, status } = useSession();
   const spotifyApi = useSpotify();
   const [color, setColor] = useState(null);
-  const playlistId = useRecoilValue(playlistIdState);
+  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
   const [playlist, setPlaylist] = useRecoilState(playlistState);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Center = () => {
     if (spotifyApi.getAccessToken()) {
       if (!playlistId) {
         spotifyApi.getUserPlaylists().then((data) => {
-          setPlaylist(data.body.items[0]);
+          setPlaylistId(data.body.items[0].id);
         });
       } else {
         spotifyApi
