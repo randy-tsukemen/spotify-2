@@ -1,9 +1,10 @@
 import useSpotify from "../hooks/useSpotify";
+import { millsToMinutesAndSeconds } from "../lib/time";
 
 const Song = ({ order, track }) => {
   return (
-    <div>
-      <div>
+    <div className="grid grid-cols-2">
+      <div className="flex items-center space-x-4">
         <p>{order + 1}</p>
         <img
           className="h-10 w-10"
@@ -14,6 +15,11 @@ const Song = ({ order, track }) => {
           <p>{track.track.name}</p>
           <p>{track.track.artists[0].name}</p>
         </div>
+      </div>
+
+      <div className="flex items-center justify-between ml-auto md:ml-0">
+        <p className="hidden md:inline">{track.track.album.name}</p>
+        <p>{millsToMinutesAndSeconds(track.track.duration_ms)}</p>
       </div>
     </div>
   );
