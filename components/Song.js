@@ -1,9 +1,26 @@
+import { useRecoilState } from "recoil";
 import useSpotify from "../hooks/useSpotify";
 import { millsToMinutesAndSeconds } from "../lib/time";
+import { currentTrackState, isPlayingState } from "../atoms/songAtom";
 
 const Song = ({ order, track }) => {
+  const spotifyApi = useSpotify();
+  const [currentTrack, setCurrentTrack] = useRecoilState(currentTrackState);
+  const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
+
+  const playSong = () => {
+    setCurrentTrack(track);
+    setIsPlaying(true);
+    spotifyApi.play({
+      uris: [track.track.uri],
+    });
+  };
+
   return (
-    <div className="grid grid-cols-2 text-gray-500 py-4 px-5 hover:bg-gray-900">
+    <div
+      className="grid grid-cols-2 text-gray-500 py-4 px-5 hover:bg-gray-900"
+      onClick={playSong}
+    >
       <div className="flex items-center space-x-4">
         <p>{order + 1}</p>
         <img
