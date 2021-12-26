@@ -40,13 +40,6 @@ const Sidebar = () => {
           <HomeIcon className="h-5 w-5" />
           <p>Home</p>
         </button>
-        <button
-          onClick={() => signOut()}
-          className="flex items-center space-x-2 hover:text-white"
-        >
-          <HomeIcon className="h-5 w-5" />
-          <p>Log out</p>
-        </button>
         <button className="flex items-center space-x-2 hover:text-white">
           <SearchIcon className="h-5 w-5" />
           <p>Search</p>
