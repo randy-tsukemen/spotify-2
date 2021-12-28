@@ -11,8 +11,9 @@ import {
   VolumeUpIcon,
   SwitchHorizontalIcon,
 } from "@heroicons/react/solid";
+import { debounce } from "lodash";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import useSpotify from "../hooks/useSpotify";
 import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
@@ -59,6 +60,19 @@ const Player = () => {
       setVolume(50);
     }
   }, [currentTrackIdState, spotifyApi, session]);
+
+  useEffect(() => {
+    if (volume > 0 && volume < 100) {
+      debouncedAdjustVolume(volume);
+    }
+  }, [volume]);
+
+  const debouncedAdjustVolume = useCallback(
+    debounce((volume) => {
+      spotifyApi.setVolume(volume);
+    }, 500),
+    []
+  );
 
   return (
     <div
